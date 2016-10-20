@@ -38,3 +38,14 @@ class LogUserForm(Form):
     ])
     pohlavi = BooleanField('Pohlavi')
 
+class FormularHodnota(Form):
+    hodnota1 = TextField('Hodnota1', validators=[
+        Predicate(safe_characters, message="Please use only letters (a-z) and numbers"),
+        Length(min=3, max=20, message="Please use between 3 and 30 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])
+    hodnota2 = TextField('Hodnota2', validators=[
+        Predicate(safe_characters, message="Please use only letters (a-z) and numbers"),
+        Length(min=3, max=30, message="Please use between 3 and 30 characters"),
+        InputRequired(message="You can't leave this empty")
+    ])

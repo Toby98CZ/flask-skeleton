@@ -2,9 +2,9 @@
 Logic for dashboard related routes
 """
 from flask import Blueprint, render_template
-from .forms import LogUserForm
+from .forms import LogUserForm, FormularHodnota
 from ..data.database import db
-from ..data.models import LogUser
+from ..data.models import LogUser, Databaze
 blueprint = Blueprint('public', __name__)
 
 @blueprint.route('/', methods=['GET'])
@@ -22,3 +22,10 @@ def InsertLogUser():
 def ListuserLog():
     pole = db.session.query(LogUser).all()
     return render_template("public/listuser.tmpl",data = pole)
+
+@blueprint.route('/formularhodnota', methods=['GET', 'POST'])
+def formularhodnotanew():
+    form = FormularHodnota()
+    if form.validate_on_submit():
+        Databaze.create(**form.data)
+    return render_template("public/formular.tmpl", form=form)
