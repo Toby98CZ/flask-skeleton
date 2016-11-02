@@ -29,3 +29,19 @@ def formularhodnotanew():
     if form.validate_on_submit():
         Databaze.create(**form.data)
     return render_template("public/formular.tmpl", form=form)
+
+@blueprint.route('/writetask', methods=['GET', 'POST'])
+def WriteTaskLog():
+    pole = db.session.query(Databaze).all()
+    return render_template("public/writeTasks.tmpl", data=pole)
+
+@blueprint.route('/smazat/<int:id>', methods=['GET', 'POST'])
+def smazat(id):
+    pole = db.session.query(Databaze).filter_by(Databaze.id==id).first()
+    try:
+        db.session.remove(pole)
+    except:
+        status=["Chyba","Error"]
+        #return redirect(ListuserLog)
+        return False
+    return True
